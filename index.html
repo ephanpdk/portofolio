@@ -69,6 +69,88 @@
             border-bottom: 2px solid var(--color-cream);
         }
 
+        /* === GALLERY ACCORDION === */
+        .album-list {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .album-item {
+            border: 2px solid var(--color-denim);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .album-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background-color: var(--color-denim);
+            color: var(--color-white);
+            cursor: pointer;
+            user-select: none;
+            font-size: 1.05rem;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+        }
+
+        .album-header:hover {
+            background-color: #3a5f7a;
+        }
+
+        .album-header .album-arrow {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .album-item.open .album-header .album-arrow {
+            transform: rotate(180deg);
+        }
+
+        .album-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            background-color: var(--color-cream);
+            padding: 0 1.5rem;
+        }
+
+        .album-item.open .album-body {
+            max-height: 1000px;
+            padding: 1.5rem;
+        }
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+
+        .album-photo {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 6px;
+            background-color: #c8d8e4;
+            display: block;
+        }
+
+        .photo-slot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .photo-slot span {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+        }
+
         /* === KONTEN UTAMA (SPA ROUTING) === */
         main {
             flex-grow: 1;
@@ -247,20 +329,106 @@
 
         <section id="gallery" class="page-section">
             <h1>Gallery</h1>
-            <p>Visualisasi dari hal-hal yang gue observasi. (Tahap selanjutnya: integrasi Flexbox/Grid khusus gambar).</p>
-            <div class="grid-container">
-                <div class="card">
-                    <h3>Album: Dance</h3>
-                    <p>[Placeholder Gambar/Video Koreografi K-Pop House Genre]</p>
+            <p>Visualisasi dari hal-hal yang gue observasi. Klik album untuk membuka foto.</p>
+
+            <div class="album-list">
+
+                <!-- Album: Dance -->
+                <div class="album-item" id="album-dance">
+                    <div class="album-header" onclick="toggleAlbum('album-dance')">
+                        <span>&#128247; Album: Dance</span>
+                        <span class="album-arrow">&#9660;</span>
+                    </div>
+                    <div class="album-body">
+                        <div class="album-grid">
+                            <div class="photo-slot">
+                                <img src="dance1.jpg" alt="Dance 1" class="album-photo" onerror="this.style.opacity='0.3'">
+                                <span>dance1.jpg</span>
+                            </div>
+                            <div class="photo-slot">
+                                <img src="dance2.jpg" alt="Dance 2" class="album-photo" onerror="this.style.opacity='0.3'">
+                                <span>dance2.jpg</span>
+                            </div>
+                            <div class="photo-slot">
+                                <img src="dance3.jpg" alt="Dance 3" class="album-photo" onerror="this.style.opacity='0.3'">
+                                <span>dance3.jpg</span>
+                            </div>
+                            <div class="photo-slot">
+                                <img src="dance4.jpg" alt="Dance 4" class="album-photo" onerror="this.style.opacity='0.3'">
+                                <span>dance4.jpg</span>
+                            </div>
+                            <div class="photo-slot">
+                                <img src="dance5.jpg" alt="Dance 5" class="album-photo" onerror="this.style.opacity='0.3'">
+                                <span>dance5.jpg</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>Album: No Face</h3>
-                    <p>[Placeholder Fotografi Siluet/Estetika Minimalis]</p>
+
+                <!-- Album: No Face -->
+                <div class="album-item" id="album-noface">
+                    <div class="album-header" onclick="toggleAlbum('album-noface')">
+                        <span>&#128248; Album: No Face</span>
+                        <span class="album-arrow">&#9660;</span>
+                    </div>
+                    <div class="album-body">
+                        <div class="album-grid">
+                            <div class="photo-slot">
+                                <img src="noface1.jpg" alt="No Face 1" class="album-photo" onerror="this.style.opacity='0.3'">
+                                <span>noface1.jpg</span>
+                            </div>
+                            <div class="photo-slot">
+                                <img src="noface2.jpg" alt="No Face 2" class="album-photo" onerror="this.style.opacity='0.3'">
+                                <span>noface2.jpg</span>
+                            </div>
+                            <div class="photo-slot">
+                                <img src="noface3.jpg" alt="No Face 3" class="album-photo" onerror="this.style.opacity='0.3'">
+                                <span>noface3.jpg</span>
+                            </div>
+                            <div class="photo-slot">
+                                <img src="noface4.jpg" alt="No Face 4" class="album-photo" onerror="this.style.opacity='0.3'">
+                                <span>noface4.jpg</span>
+                            </div>
+                            <div class="photo-slot">
+                                <img src="noface5.jpg" alt="No Face 5" class="album-photo" onerror="this.style.opacity='0.3'">
+                                <span>noface5.jpg</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>Album: Cat</h3>
-                    <p>[Placeholder Kumpulan Foto Kucing]</p>
+
+                <!-- Album: Cat -->
+                <div class="album-item" id="album-cat">
+                    <div class="album-header" onclick="toggleAlbum('album-cat')">
+                        <span>&#128049; Album: Cat</span>
+                        <span class="album-arrow">&#9660;</span>
+                    </div>
+                    <div class="album-body">
+                        <div class="album-grid">
+                            <div class="photo-slot">
+                                <img src="cat1.jpg" alt="Cat 1" class="album-photo" onerror="this.style.opacity='0.3'">
+                                <span>cat1.jpg</span>
+                            </div>
+                            <div class="photo-slot">
+                                <img src="cat2.jpg" alt="Cat 2" class="album-photo" onerror="this.style.opacity='0.3'">
+                                <span>cat2.jpg</span>
+                            </div>
+                            <div class="photo-slot">
+                                <img src="cat3.jpg" alt="Cat 3" class="album-photo" onerror="this.style.opacity='0.3'">
+                                <span>cat3.jpg</span>
+                            </div>
+                            <div class="photo-slot">
+                                <img src="cat4.jpg" alt="Cat 4" class="album-photo" onerror="this.style.opacity='0.3'">
+                                <span>cat4.jpg</span>
+                            </div>
+                            <div class="photo-slot">
+                                <img src="cat5.jpg" alt="Cat 5" class="album-photo" onerror="this.style.opacity='0.3'">
+                                <span>cat5.jpg</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </section>
 
@@ -298,6 +466,11 @@
     </main>
 
     <script>
+        function toggleAlbum(albumId) {
+            const album = document.getElementById(albumId);
+            album.classList.toggle('open');
+        }
+
         function navigate(targetId) {
             const sections = document.querySelectorAll('.page-section');
             sections.forEach(section => {
