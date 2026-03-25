@@ -3,293 +3,671 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio SPA | 1 File</title>
+    <title>Zephaniah Daniel Anis</title>
     <style>
-        /* === VARIABEL WARNA (Tema: Cream, Denim, White, Black) === */
         :root {
-            --color-cream: #F4EBD0;
-            --color-denim: #29465B;
-            --color-white: #FFFFFF;
-            --color-black: #1A1A1A;
-            --color-text-muted: #4A4A4A;
+            --cream: #F4EBD0;
+            --denim: #29465B;
+            --denim-light: #3a5f7a;
+            --denim-dark: #1e3344;
+            --white: #FFFFFF;
+            --black: #1A1A1A;
+            --muted: #5a6a74;
+            --cream-dark: #e8d9b8;
         }
 
-        /* === RESET & FONDASI === */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        html { scroll-behavior: smooth; }
+
         body {
-            background-color: var(--color-cream);
-            color: var(--color-black);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--cream);
+            color: var(--black);
             line-height: 1.6;
-            display: flex;
-            flex-direction: column;
             min-height: 100vh;
         }
 
-        /* === NAVIGASI === */
+        /* ==============================
+           NAVBAR
+        ============================== */
         header {
-            background-color: var(--color-denim);
-            padding: 1rem 0;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background-color: var(--denim);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 999;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.25);
         }
 
         nav {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 0.25rem;
+            padding: 0.6rem 1rem;
         }
 
         nav button {
             background: none;
             border: none;
-            color: var(--color-white);
-            font-size: 1.1rem;
-            font-weight: bold;
+            color: rgba(255,255,255,0.75);
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
             cursor: pointer;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s ease, border-bottom 0.3s ease;
-            border-bottom: 2px solid transparent;
+            padding: 0.55rem 1.25rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            font-size: 0.85rem;
         }
 
         nav button:hover {
-            color: var(--color-cream);
+            color: var(--white);
+            background: rgba(255,255,255,0.1);
         }
 
         nav button.active {
-            border-bottom: 2px solid var(--color-cream);
+            color: var(--white);
+            background: rgba(255,255,255,0.18);
         }
 
-        /* === GALLERY ACCORDION === */
-        .album-list {
-            margin-top: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .album-item {
-            border: 2px solid var(--color-denim);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .album-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            background-color: var(--color-denim);
-            color: var(--color-white);
-            cursor: pointer;
-            user-select: none;
-            font-size: 1.05rem;
-            font-weight: bold;
-            transition: background-color 0.2s ease;
-        }
-
-        .album-header:hover {
-            background-color: #3a5f7a;
-        }
-
-        .album-header .album-arrow {
-            font-size: 1rem;
-            transition: transform 0.3s ease;
-            display: inline-block;
-        }
-
-        .album-item.open .album-header .album-arrow {
-            transform: rotate(180deg);
-        }
-
-        .album-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.3s ease;
-            background-color: var(--color-cream);
-            padding: 0 1.5rem;
-        }
-
-        .album-item.open .album-body {
-            max-height: 1000px;
-            padding: 1.5rem;
-        }
-
-        .album-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 1rem;
-        }
-
-        .album-photo {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
-            border-radius: 6px;
-            background-color: #c8d8e4;
-            display: block;
-        }
-
-        .photo-slot {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .photo-slot span {
-            font-size: 0.75rem;
-            color: var(--color-text-muted);
-        }
-
-        /* === KONTEN UTAMA (SPA ROUTING) === */
-        main {
-            flex-grow: 1;
-            max-width: 950px;
-            margin: 3rem auto;
-            padding: 3rem;
-            background-color: var(--color-white);
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            width: 90%;
-        }
-
-        /* Logika Sembunyikan/Tampilkan Section */
+        /* ==============================
+           PAGE SECTIONS
+        ============================== */
         .page-section {
             display: none;
-            animation: fadeIn 0.4s ease-in-out;
+            animation: fadeUp 0.35s ease;
         }
 
         .page-section.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* === TYPOGRAPHY & LAYOUT DASAR === */
-        h1, h2 {
-            color: var(--color-denim);
-            margin-bottom: 1rem;
+        /* ==============================
+           HOME PAGE
+        ============================== */
+        #home {
+            min-height: calc(100vh - 60px);
         }
 
-        p {
-            margin-bottom: 1rem;
-            color: var(--color-text-muted);
+        .hero {
+            background: linear-gradient(135deg, var(--denim) 0%, var(--denim-light) 100%);
+            padding: 5rem 2rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* Struktur Card Kasar untuk Blog/Gallery */
-        .grid-container {
+        .hero-inner {
+            max-width: 900px;
+            width: 100%;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+            grid-template-columns: 1fr auto;
+            gap: 3rem;
+            align-items: center;
         }
 
-        .card {
-            background-color: var(--color-cream);
-            padding: 1.5rem;
-            border-radius: 6px;
-            border-left: 4px solid var(--color-denim);
+        .hero-text {
+            color: var(--white);
         }
 
-        #home .profile-container {
-            display: grid;
-            grid-template-columns: 1fr; /* Tampilan mobile-first, satu kolom */
-            gap: 2rem;
-            align-items: start; /* Pastikan konten tidak meregang */
+        .hero-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            color: var(--cream);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.35rem 0.85rem;
+            border-radius: 20px;
+            margin-bottom: 1.2rem;
         }
 
-        @media (min-width: 600px) {
-            #home .profile-container {
-                grid-template-columns: 1fr 2fr; /* Tampilan desktop, dua kolom */
-            }
+        .hero-text h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            color: var(--white);
         }
 
-        #home .profile-meta {
-            text-align: center;
+        .hero-text h1 span {
+            color: var(--cream);
+        }
+
+        .hero-text p {
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.75);
+            max-width: 480px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .hero-tags .tag {
+            background: rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.9);
+            font-size: 0.8rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .hero-photo-wrap {
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 0.75rem;
         }
 
-        #home h1 {
-            font-size: 2.2rem;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase; /* Membuat kapital semua */
-            letter-spacing: 1px; /* Jarak antar huruf */
-            color: var(--color-denim); /* Warna denim */
-            font-weight: 800; /* Tebal */
-        }
-
-        #home .profile-image {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%; /* Membuat melingkar sempurna */
-            background-color: var(--color-denim); /* Latar belakang placeholder */
-            overflow: hidden; /* Sembunyikan bagian luar lingkaran */
-            border: 4px solid var(--color-cream); /* Batas krem halus */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Bayangan modern dan halus */
-            position: relative; /* Untuk memposisikan teks placeholder */
-            margin: 1rem 0;
+        .hero-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background-color: var(--denim-dark);
+            border: 4px solid rgba(255,255,255,0.25);
+            overflow: hidden;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
         }
 
-        #home .profile-image img {
+        .hero-photo img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Pastikan gambar proporsional */
-            display: none; /* Sembunyikan untuk sementara saat ini adalah placeholder */
+            object-fit: cover;
+            display: block;
         }
 
-        #home .profile-image .placeholder-text {
-            color: var(--color-cream);
-            font-size: 0.8rem;
-            font-weight: bold;
-            opacity: 0.8;
+        .hero-photo .ph-text {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.75rem;
+            text-align: center;
+            padding: 0.5rem;
         }
 
-        #home h2 {
-            font-size: 1.6rem;
-            color: var(--color-black); /* Hitam */
-            margin-top: 0;
+        .hero-name-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.82rem;
+            font-style: italic;
+        }
+
+        /* About strip below hero */
+        .about-strip {
+            background-color: var(--white);
+            padding: 3rem 2rem;
+        }
+
+        .about-strip-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .about-card {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .about-card .icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .about-card h3 {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .about-card p {
+            font-size: 0.95rem;
+            color: var(--black);
+            line-height: 1.55;
+        }
+
+        /* Full bio section */
+        .bio-section {
+            background-color: var(--cream);
+            padding: 3.5rem 2rem;
+        }
+
+        .bio-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
             margin-bottom: 1.5rem;
         }
 
-        #home .profile-about {
-            /* Menambahkan aksen garis kiri yang modern */
-            border-left: 2px solid var(--color-cream);
-            padding-left: 2rem;
+        .section-label span {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
         }
 
-        #home p {
-            margin-bottom: 1.5rem; /* Meningkatkan jarak antar paragraf */
-            color: var(--color-text-muted); /* Warna teks abu-abu */
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--cream-dark);
+        }
+
+        .bio-inner p {
             font-size: 1rem;
+            color: #3a3a3a;
+            margin-bottom: 1.2rem;
+            line-height: 1.75;
         }
 
-        @media (max-width: 599px) {
-            #home .profile-about {
-                border-left: none;
-                padding-left: 0;
-                border-top: 2px solid var(--color-cream); /* Pindah ke atas */
-                padding-top: 1.5rem;
+        @media (max-width: 620px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
             }
+            .hero-photo-wrap { order: -1; }
+            .hero-tags { justify-content: center; }
+            .hero-text p { margin-left: auto; margin-right: auto; }
         }
 
+        /* ==============================
+           GALLERY PAGE
+        ============================== */
+        #gallery {
+            padding: 3.5rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--denim);
+            margin-bottom: 0.4rem;
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+            color: var(--muted);
+            margin-bottom: 2.5rem;
+        }
+
+        .album-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .album-item {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(41,70,91,0.08);
+            transition: box-shadow 0.2s ease;
+        }
+
+        .album-item:hover {
+            box-shadow: 0 4px 24px rgba(41,70,91,0.14);
+        }
+
+        .album-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .album-header:hover {
+            background: rgba(41,70,91,0.04);
+        }
+
+        .album-cover {
+            width: 52px;
+            height: 52px;
+            border-radius: 8px;
+            background: var(--cream-dark);
+            overflow: hidden;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .album-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .album-info {
+            flex: 1;
+        }
+
+        .album-info h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--denim);
+            margin-bottom: 0.15rem;
+        }
+
+        .album-info p {
+            font-size: 0.82rem;
+            color: var(--muted);
+        }
+
+        .album-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .album-count {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--muted);
+            background: var(--cream);
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+        }
+
+        .album-arrow {
+            color: var(--muted);
+            font-size: 0.85rem;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .album-item.open .album-arrow {
+            transform: rotate(180deg);
+        }
+
+        .album-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .album-item.open .album-body {
+            max-height: 1200px;
+        }
+
+        .album-body-inner {
+            padding: 0 1.5rem 1.5rem;
+            border-top: 1px solid var(--cream-dark);
+        }
+
+        .album-body-inner .note {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-style: italic;
+            margin: 1rem 0 1rem;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .photo-frame {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--cream-dark);
+            cursor: pointer;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.35s ease;
+        }
+
+        .photo-frame:hover img {
+            transform: scale(1.06);
+        }
+
+        .photo-frame .ph-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0.25rem;
+            color: var(--muted);
+            font-size: 0.72rem;
+        }
+
+        .photo-frame .ph-overlay .ph-icon {
+            font-size: 1.5rem;
+            opacity: 0.4;
+        }
+
+        /* ==============================
+           BLOG PAGE
+        ============================== */
+        #blog {
+            padding: 3.5rem 2rem;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .blog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .blog-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.75rem 2rem;
+            box-shadow: 0 2px 12px rgba(41,70,91,0.07);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            align-items: start;
+            transition: box-shadow 0.2s, transform 0.2s;
+            cursor: default;
+        }
+
+        .blog-card:hover {
+            box-shadow: 0 6px 28px rgba(41,70,91,0.12);
+            transform: translateY(-2px);
+        }
+
+        .blog-card-body {}
+
+        .blog-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .blog-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--denim);
+            background: rgba(41,70,91,0.09);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+        }
+
+        .blog-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+
+        .blog-card p {
+            font-size: 0.92rem;
+            color: var(--muted);
+            line-height: 1.65;
+            margin-bottom: 1rem;
+        }
+
+        .blog-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.78rem;
+            color: #8a9aa4;
+        }
+
+        .blog-card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .blog-card-num {
+            font-size: 3rem;
+            font-weight: 800;
+            color: rgba(41,70,91,0.08);
+            line-height: 1;
+            align-self: start;
+            min-width: 56px;
+            text-align: right;
+        }
+
+        @media (max-width: 520px) {
+            .blog-card { grid-template-columns: 1fr; }
+            .blog-card-num { display: none; }
+        }
+
+        /* ==============================
+           CONTACT PAGE
+        ============================== */
+        #contact {
+            min-height: calc(100vh - 60px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+        }
+
+        .contact-inner {
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .contact-inner h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--denim);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-inner .sub {
+            font-size: 0.95rem;
+            color: var(--muted);
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--black);
+            box-shadow: 0 2px 10px rgba(41,70,91,0.08);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .contact-link:hover {
+            background: var(--denim);
+            color: var(--white);
+            box-shadow: 0 4px 20px rgba(41,70,91,0.25);
+            transform: translateY(-2px);
+        }
+
+        .contact-link .cl-icon {
+            font-size: 1.3rem;
+            width: 32px;
+            text-align: center;
+        }
+
+        .contact-link .cl-info {
+            text-align: left;
+            flex: 1;
+        }
+
+        .contact-link .cl-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.55;
+            display: block;
+            margin-bottom: 0.1rem;
+        }
+
+        .contact-link .cl-value {
+            font-size: 0.92rem;
+            font-weight: 600;
+        }
+
+        .contact-link .cl-arrow {
+            opacity: 0.35;
+            font-size: 0.85rem;
+        }
+
+        .contact-link:hover .cl-label,
+        .contact-link:hover .cl-arrow {
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body>
@@ -303,195 +681,334 @@
         </nav>
     </header>
 
-    <main>
-        
-        <section id="home" class="page-section active">
-            <div class="profile-container">
-                
-                <div class="profile-meta">
-                    <h1>Know About Me</h1>
+    <!-- ========================
+         HOME
+    ========================= -->
+    <section id="home" class="page-section active">
 
-                    <div class="profile-image">
-                        <img src="profil.jpeg" alt="Zephaniah Profile" class="profile-img-placeholder">
-                        <div class="placeholder-text">[FOTO PROFIL]</div>
+        <div class="hero">
+            <div class="hero-inner">
+                <div class="hero-text">
+                    <div class="hero-tag">&#128075; Portofolio</div>
+                    <h1>Halo, Saya<br><span>Zephaniah<br>Daniel Anis.</span></h1>
+                    <p>Problem solver taktis — berpikir adaptif, bergerak independen, dan fokus pada kualitas kode di atas segalanya.</p>
+                    <div class="hero-tags">
+                        <span class="tag">Web Development</span>
+                        <span class="tag">Game Dev</span>
+                        <span class="tag">Computer Science</span>
+                        <span class="tag">High-APM Thinker</span>
                     </div>
                 </div>
-
-                <div class="profile-about">
-                    <h2>Halo, Saya Zephaniah Daniel Anis.</h2>
-                    
-                    <p>Saya adalah problem solver taktis yang bisa tetap tenang di bawah tekanan (terlatih dari game high-APM). Saya terbiasa berpikir adaptif dan independen.</p>
-                    <p>Saat ini saya sedang mendalami Ilmu Komputer, spesifiknya pada Pemrogramman Web dan Game Development. Fokus saya adalah efisiensi dan kualitas kode.</p>
-                    <p>Tantangan terbesar saya adalah mempertahankan fokus jangka panjang dan mengelola impulsivitas, namun itulah alasan saya membangun portofolio terstruktur ini—untuk mendorong diri saya dalam mendokumentasikan proses.</p>
+                <div class="hero-photo-wrap">
+                    <div class="hero-photo">
+                        <img src="profil.jpeg" alt="Foto Profil" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="ph-text" style="display:none">📷<br>Foto<br>Profil</div>
+                    </div>
+                    <span class="hero-name-label">Zephaniah D. A.</span>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section id="gallery" class="page-section">
-            <h1>Gallery</h1>
-            <p>Visualisasi dari hal-hal yang gue observasi. Klik album untuk membuka foto.</p>
+        <div class="about-strip">
+            <div class="about-strip-inner">
+                <div class="about-card">
+                    <div class="icon">&#127981;</div>
+                    <h3>Fokus Studi</h3>
+                    <p>Ilmu Komputer — spesifik pada Pemrograman Web dan Game Development.</p>
+                </div>
+                <div class="about-card">
+                    <div class="icon">&#9889;</div>
+                    <h3>Cara Berpikir</h3>
+                    <p>Terlatih dari game high-APM: keputusan cepat, adaptif, dan tetap tenang di bawah tekanan.</p>
+                </div>
+                <div class="about-card">
+                    <div class="icon">&#127919;</div>
+                    <h3>Tujuan</h3>
+                    <p>Membangun portofolio terstruktur sebagai bentuk dokumentasi proses dan mendorong diri sendiri.</p>
+                </div>
+            </div>
+        </div>
 
-            <div class="album-list">
+        <div class="bio-section">
+            <div class="bio-inner">
+                <div class="section-label"><span>Tentang Saya</span></div>
+                <p>Saya adalah problem solver taktis yang bisa tetap tenang di bawah tekanan — kebiasaan yang terbentuk dari jam-jam bermain game high-APM yang menuntut pengambilan keputusan dalam sepersekian detik.</p>
+                <p>Saat ini saya sedang mendalami Ilmu Komputer, dengan fokus khusus pada Pemrograman Web dan Game Development. Prinsip saya sederhana: efisiensi dan kualitas kode di atas segalanya.</p>
+                <p>Tantangan terbesar saya adalah mempertahankan fokus jangka panjang — dan itulah kenapa portofolio ini ada. Bukan hanya untuk dilihat orang lain, tapi untuk mendorong diri saya sendiri agar terus mendokumentasikan setiap proses.</p>
+            </div>
+        </div>
 
-                <!-- Album: Dance -->
-                <div class="album-item" id="album-dance">
-                    <div class="album-header" onclick="toggleAlbum('album-dance')">
-                        <span>&#128247; Album: Dance</span>
+    </section>
+
+    <!-- ========================
+         GALLERY
+    ========================= -->
+    <section id="gallery" class="page-section">
+        <h1 class="page-title">Gallery</h1>
+        <p class="page-subtitle">Hal-hal yang gue abadikan — gerak, bayangan, dan mahluk berbulu.</p>
+
+        <div class="album-list">
+
+            <!-- Dance -->
+            <div class="album-item" id="album-dance">
+                <div class="album-header" onclick="toggleAlbum('album-dance')">
+                    <div class="album-cover">🕺</div>
+                    <div class="album-info">
+                        <h3>Dance</h3>
+                        <p>Koreografi K-Pop &amp; House Genre</p>
+                    </div>
+                    <div class="album-meta">
+                        <span class="album-count">5 foto</span>
                         <span class="album-arrow">&#9660;</span>
                     </div>
-                    <div class="album-body">
-                        <div class="album-grid">
-                            <div class="photo-slot">
-                                <img src="dance1.jpg" alt="Dance 1" class="album-photo" onerror="this.style.opacity='0.3'">
-                                <span>dance1.jpg</span>
+                </div>
+                <div class="album-body">
+                    <div class="album-body-inner">
+                        <p class="note">Tambahkan foto dengan nama: dance1.jpg, dance2.jpg, dst.</p>
+                        <div class="photo-grid">
+                            <div class="photo-frame">
+                                <img src="dance1.jpg" alt="Dance 1" onerror="this.style.display='none'">
+                                <div class="ph-overlay"><span class="ph-icon">🖼️</span><span>dance1.jpg</span></div>
                             </div>
-                            <div class="photo-slot">
-                                <img src="dance2.jpg" alt="Dance 2" class="album-photo" onerror="this.style.opacity='0.3'">
-                                <span>dance2.jpg</span>
+                            <div class="photo-frame">
+                                <img src="dance2.jpg" alt="Dance 2" onerror="this.style.display='none'">
+                                <div class="ph-overlay"><span class="ph-icon">🖼️</span><span>dance2.jpg</span></div>
                             </div>
-                            <div class="photo-slot">
-                                <img src="dance3.jpg" alt="Dance 3" class="album-photo" onerror="this.style.opacity='0.3'">
-                                <span>dance3.jpg</span>
+                            <div class="photo-frame">
+                                <img src="dance3.jpg" alt="Dance 3" onerror="this.style.display='none'">
+                                <div class="ph-overlay"><span class="ph-icon">🖼️</span><span>dance3.jpg</span></div>
                             </div>
-                            <div class="photo-slot">
-                                <img src="dance4.jpg" alt="Dance 4" class="album-photo" onerror="this.style.opacity='0.3'">
-                                <span>dance4.jpg</span>
+                            <div class="photo-frame">
+                                <img src="dance4.jpg" alt="Dance 4" onerror="this.style.display='none'">
+                                <div class="ph-overlay"><span class="ph-icon">🖼️</span><span>dance4.jpg</span></div>
                             </div>
-                            <div class="photo-slot">
-                                <img src="dance5.jpg" alt="Dance 5" class="album-photo" onerror="this.style.opacity='0.3'">
-                                <span>dance5.jpg</span>
+                            <div class="photo-frame">
+                                <img src="dance5.jpg" alt="Dance 5" onerror="this.style.display='none'">
+                                <div class="ph-overlay"><span class="ph-icon">🖼️</span><span>dance5.jpg</span></div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Album: No Face -->
-                <div class="album-item" id="album-noface">
-                    <div class="album-header" onclick="toggleAlbum('album-noface')">
-                        <span>&#128248; Album: No Face</span>
+            <!-- No Face -->
+            <div class="album-item" id="album-noface">
+                <div class="album-header" onclick="toggleAlbum('album-noface')">
+                    <div class="album-cover">🌑</div>
+                    <div class="album-info">
+                        <h3>No Face</h3>
+                        <p>Fotografi Siluet &amp; Estetika Minimalis</p>
+                    </div>
+                    <div class="album-meta">
+                        <span class="album-count">5 foto</span>
                         <span class="album-arrow">&#9660;</span>
                     </div>
-                    <div class="album-body">
-                        <div class="album-grid">
-                            <div class="photo-slot">
-                                <img src="noface1.jpg" alt="No Face 1" class="album-photo" onerror="this.style.opacity='0.3'">
-                                <span>noface1.jpg</span>
+                </div>
+                <div class="album-body">
+                    <div class="album-body-inner">
+                        <p class="note">Tambahkan foto dengan nama: noface1.jpg, noface2.jpg, dst.</p>
+                        <div class="photo-grid">
+                            <div class="photo-frame">
+                                <img src="noface1.jpg" alt="No Face 1" onerror="this.style.display='none'">
+                                <div class="ph-overlay"><span class="ph-icon">🖼️</span><span>noface1.jpg</span></div>
                             </div>
-                            <div class="photo-slot">
-                                <img src="noface2.jpg" alt="No Face 2" class="album-photo" onerror="this.style.opacity='0.3'">
-                                <span>noface2.jpg</span>
+                            <div class="photo-frame">
+                                <img src="noface2.jpg" alt="No Face 2" onerror="this.style.display='none'">
+                                <div class="ph-overlay"><span class="ph-icon">🖼️</span><span>noface2.jpg</span></div>
                             </div>
-                            <div class="photo-slot">
-                                <img src="noface3.jpg" alt="No Face 3" class="album-photo" onerror="this.style.opacity='0.3'">
-                                <span>noface3.jpg</span>
+                            <div class="photo-frame">
+                                <img src="noface3.jpg" alt="No Face 3" onerror="this.style.display='none'">
+                                <div class="ph-overlay"><span class="ph-icon">🖼️</span><span>noface3.jpg</span></div>
                             </div>
-                            <div class="photo-slot">
-                                <img src="noface4.jpg" alt="No Face 4" class="album-photo" onerror="this.style.opacity='0.3'">
-                                <span>noface4.jpg</span>
+                            <div class="photo-frame">
+                                <img src="noface4.jpg" alt="No Face 4" onerror="this.style.display='none'">
+                                <div class="ph-overlay"><span class="ph-icon">🖼️</span><span>noface4.jpg</span></div>
                             </div>
-                            <div class="photo-slot">
-                                <img src="noface5.jpg" alt="No Face 5" class="album-photo" onerror="this.style.opacity='0.3'">
-                                <span>noface5.jpg</span>
+                            <div class="photo-frame">
+                                <img src="noface5.jpg" alt="No Face 5" onerror="this.style.display='none'">
+                                <div class="ph-overlay"><span class="ph-icon">🖼️</span><span>noface5.jpg</span></div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Album: Cat -->
-                <div class="album-item" id="album-cat">
-                    <div class="album-header" onclick="toggleAlbum('album-cat')">
-                        <span>&#128049; Album: Cat</span>
+            <!-- Cat -->
+            <div class="album-item" id="album-cat">
+                <div class="album-header" onclick="toggleAlbum('album-cat')">
+                    <div class="album-cover">🐈</div>
+                    <div class="album-info">
+                        <h3>Cat</h3>
+                        <p>Kumpulan Foto Kucing</p>
+                    </div>
+                    <div class="album-meta">
+                        <span class="album-count">5 foto</span>
                         <span class="album-arrow">&#9660;</span>
                     </div>
-                    <div class="album-body">
-                        <div class="album-grid">
-                            <div class="photo-slot">
-                                <img src="cat1.jpg" alt="Cat 1" class="album-photo" onerror="this.style.opacity='0.3'">
-                                <span>cat1.jpg</span>
+                </div>
+                <div class="album-body">
+                    <div class="album-body-inner">
+                        <p class="note">Tambahkan foto dengan nama: cat1.jpg, cat2.jpg, dst.</p>
+                        <div class="photo-grid">
+                            <div class="photo-frame">
+                                <img src="cat1.jpg" alt="Cat 1" onerror="this.style.display='none'">
+                                <div class="ph-overlay"><span class="ph-icon">🖼️</span><span>cat1.jpg</span></div>
                             </div>
-                            <div class="photo-slot">
-                                <img src="cat2.jpg" alt="Cat 2" class="album-photo" onerror="this.style.opacity='0.3'">
-                                <span>cat2.jpg</span>
+                            <div class="photo-frame">
+                                <img src="cat2.jpg" alt="Cat 2" onerror="this.style.display='none'">
+                                <div class="ph-overlay"><span class="ph-icon">🖼️</span><span>cat2.jpg</span></div>
                             </div>
-                            <div class="photo-slot">
-                                <img src="cat3.jpg" alt="Cat 3" class="album-photo" onerror="this.style.opacity='0.3'">
-                                <span>cat3.jpg</span>
+                            <div class="photo-frame">
+                                <img src="cat3.jpg" alt="Cat 3" onerror="this.style.display='none'">
+                                <div class="ph-overlay"><span class="ph-icon">🖼️</span><span>cat3.jpg</span></div>
                             </div>
-                            <div class="photo-slot">
-                                <img src="cat4.jpg" alt="Cat 4" class="album-photo" onerror="this.style.opacity='0.3'">
-                                <span>cat4.jpg</span>
+                            <div class="photo-frame">
+                                <img src="cat4.jpg" alt="Cat 4" onerror="this.style.display='none'">
+                                <div class="ph-overlay"><span class="ph-icon">🖼️</span><span>cat4.jpg</span></div>
                             </div>
-                            <div class="photo-slot">
-                                <img src="cat5.jpg" alt="Cat 5" class="album-photo" onerror="this.style.opacity='0.3'">
-                                <span>cat5.jpg</span>
+                            <div class="photo-frame">
+                                <img src="cat5.jpg" alt="Cat 5" onerror="this.style.display='none'">
+                                <div class="ph-overlay"><span class="ph-icon">🖼️</span><span>cat5.jpg</span></div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-        </section>
 
-        <section id="blog" class="page-section">
-            <h1>Pemikiran & Analisa</h1>
-            <p>Arsip pemikiran teknis, ulasan media, dan strategi bisnis.</p>
-            <div class="grid-container">
-                <article class="card">
-                    <h3>1. Logika Filter Grayscale dengan OpenCV</h3>
-                    <p>Membongkar matematika di balik manipulasi pixel pada pengolahan citra digital. Mengapa sekadar membagi nilai RGB dengan 3 tidak selalu menghasilkan kontras yang baik untuk mata manusia?</p>
-                </article>
-                <article class="card">
-                    <h3>2. Prospek Bisnis: Magma-Thermic Tableware</h3>
-                    <p>Analisa P2MW: Bagaimana mengubah limbah abu vulkanik menjadi produk peralatan makan yang memiliki nilai fungsional dan retensi panas tinggi.</p>
-                </article>
-                <article class="card">
-                    <h3>3. Analisa Kognitif di Balik Game High-APM</h3>
-                    <p>Membedah *decision making* sepersekian detik dalam Monster Hunter dan dampaknya pada refleks pemecahan masalah di dunia nyata.</p>
-                </article>
+        </div>
+    </section>
+
+    <!-- ========================
+         BLOG
+    ========================= -->
+    <section id="blog" class="page-section">
+        <h1 class="page-title">Pemikiran &amp; Analisa</h1>
+        <p class="page-subtitle">Arsip tulisan teknis, ulasan, dan strategi — ditulis saat gue benar-benar paham sesuatu.</p>
+
+        <div class="blog-list">
+
+            <div class="blog-card">
+                <div class="blog-card-body">
+                    <div class="blog-card-tags">
+                        <span class="blog-tag">Computer Vision</span>
+                        <span class="blog-tag">Python</span>
+                    </div>
+                    <h3>Logika Filter Grayscale dengan OpenCV</h3>
+                    <p>Membongkar matematika di balik manipulasi pixel pada pengolahan citra digital. Mengapa sekadar membagi nilai RGB dengan 3 tidak selalu menghasilkan kontras yang baik untuk mata manusia? Jawabannya ada di luminance weighting.</p>
+                    <div class="blog-card-meta">
+                        <span>&#128197; [Tanggal Publish]</span>
+                        <span>&#9201; [X] menit baca</span>
+                    </div>
+                </div>
+                <div class="blog-card-num">01</div>
             </div>
-        </section>
 
-        <section id="contact" class="page-section">
-            <h1>Hubungi Gue</h1>
-            <p>Jangan ragu untuk menjangkau lewat jalur di bawah ini untuk diskusi teknis atau peluang kolaborasi.</p>
-            <ul>
-                <li><strong>GitHub:</strong> [Link GitHub Lu]</li>
-                <li><strong>LinkedIn:</strong> [Link LinkedIn Lu]</li>
-                <li><strong>Discord:</strong> [Username Discord]</li>
-                <li><strong>Instagram:</strong> [Username IG]</li>
-                <li><strong>WhatsApp:</strong> [Nomor WA Profesional]</li>
-            </ul>
-        </section>
+            <div class="blog-card">
+                <div class="blog-card-body">
+                    <div class="blog-card-tags">
+                        <span class="blog-tag">Bisnis</span>
+                        <span class="blog-tag">Inovasi</span>
+                    </div>
+                    <h3>Prospek Bisnis: Magma-Thermic Tableware</h3>
+                    <p>Analisa P2MW: Bagaimana mengubah limbah abu vulkanik menjadi produk peralatan makan yang memiliki nilai fungsional dan retensi panas tinggi. Dari riset material hingga model bisnis.</p>
+                    <div class="blog-card-meta">
+                        <span>&#128197; [Tanggal Publish]</span>
+                        <span>&#9201; [X] menit baca</span>
+                    </div>
+                </div>
+                <div class="blog-card-num">02</div>
+            </div>
 
-    </main>
+            <div class="blog-card">
+                <div class="blog-card-body">
+                    <div class="blog-card-tags">
+                        <span class="blog-tag">Psikologi</span>
+                        <span class="blog-tag">Gaming</span>
+                    </div>
+                    <h3>Analisa Kognitif di Balik Game High-APM</h3>
+                    <p>Membedah decision making sepersekian detik dalam Monster Hunter dan dampaknya pada refleks pemecahan masalah di dunia nyata. Apakah game benar-benar melatih otak, atau hanya ilusi produktif?</p>
+                    <div class="blog-card-meta">
+                        <span>&#128197; [Tanggal Publish]</span>
+                        <span>&#9201; [X] menit baca</span>
+                    </div>
+                </div>
+                <div class="blog-card-num">03</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================
+         CONTACT
+    ========================= -->
+    <section id="contact" class="page-section">
+        <div class="contact-inner">
+            <h1>Let's Connect</h1>
+            <p class="sub">Terbuka untuk diskusi teknis, kolaborasi, atau sekadar ngobrol.</p>
+
+            <div class="contact-links">
+                <a class="contact-link" href="https://github.com/[username]" target="_blank">
+                    <span class="cl-icon">&#128025;</span>
+                    <div class="cl-info">
+                        <span class="cl-label">GitHub</span>
+                        <span class="cl-value">github.com/[username]</span>
+                    </div>
+                    <span class="cl-arrow">&#8599;</span>
+                </a>
+                <a class="contact-link" href="https://linkedin.com/in/[username]" target="_blank">
+                    <span class="cl-icon">&#128188;</span>
+                    <div class="cl-info">
+                        <span class="cl-label">LinkedIn</span>
+                        <span class="cl-value">linkedin.com/in/[username]</span>
+                    </div>
+                    <span class="cl-arrow">&#8599;</span>
+                </a>
+                <a class="contact-link" href="#">
+                    <span class="cl-icon">&#127918;</span>
+                    <div class="cl-info">
+                        <span class="cl-label">Discord</span>
+                        <span class="cl-value">[username#0000]</span>
+                    </div>
+                    <span class="cl-arrow">&#8599;</span>
+                </a>
+                <a class="contact-link" href="https://instagram.com/[username]" target="_blank">
+                    <span class="cl-icon">&#128247;</span>
+                    <div class="cl-info">
+                        <span class="cl-label">Instagram</span>
+                        <span class="cl-value">@[username]</span>
+                    </div>
+                    <span class="cl-arrow">&#8599;</span>
+                </a>
+                <a class="contact-link" href="https://wa.me/62[nomorwa]" target="_blank">
+                    <span class="cl-icon">&#128222;</span>
+                    <div class="cl-info">
+                        <span class="cl-label">WhatsApp</span>
+                        <span class="cl-value">+62 [Nomor WA]</span>
+                    </div>
+                    <span class="cl-arrow">&#8599;</span>
+                </a>
+            </div>
+        </div>
+    </section>
 
     <script>
-        function toggleAlbum(albumId) {
-            const album = document.getElementById(albumId);
-            album.classList.toggle('open');
+        function toggleAlbum(id) {
+            document.getElementById(id).classList.toggle('open');
         }
 
         function navigate(targetId) {
-            const sections = document.querySelectorAll('.page-section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('#main-nav button').forEach(b => b.classList.remove('active'));
 
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-                targetSection.classList.add('active');
-            }
+            const section = document.getElementById(targetId);
+            if (section) section.classList.add('active');
 
-            const navButtons = document.querySelectorAll('#main-nav button');
-            navButtons.forEach(button => {
-                button.classList.remove('active');
-            });
+            const btn = document.querySelector(`#main-nav button[data-target="${targetId}"]`);
+            if (btn) btn.classList.add('active');
 
-            const activeButton = document.querySelector(`#main-nav button[data-target="${targetId}"]`);
-            if (activeButton) {
-                activeButton.classList.add('active');
-            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
+
 </body>
 </html>
