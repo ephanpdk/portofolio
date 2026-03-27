@@ -24,6 +24,7 @@ body {
     line-height: 1.6;
     min-height: 100vh;
 }
+
 header {
     background-color: var(--denim);
     position: sticky;
@@ -39,7 +40,7 @@ nav {
     gap: 0.25rem;
     padding: 0.6rem 1rem;
 }
-nav button {
+nav a {
     background: none;
     border: none;
     color: rgba(255,255,255,0.75);
@@ -51,15 +52,32 @@ nav button {
     border-radius: 6px;
     transition: all 0.2s ease;
     text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
 }
-nav button:hover { color: var(--white); background: rgba(255,255,255,0.1); }
-nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
+nav a:hover { color: var(--white); background: rgba(255,255,255,0.1); }
+
+body:not(:has(:target)) nav a[href="#home"],
+body:has(#home:target) nav a[href="#home"],
+body:has(#gallery:target) nav a[href="#gallery"],
+body:has(#blog:target) nav a[href="#blog"],
+body:has(#contact:target) nav a[href="#contact"] {
+    color: var(--white);
+    background: rgba(255,255,255,0.18);
+}
+
 .page-section { display: none; animation: fadeUp 0.35s ease; }
-.page-section.active { display: block; }
+#home { display: block; }
+.page-section:target { display: block; }
+body:has(#gallery:target) #home,
+body:has(#blog:target) #home,
+body:has(#contact:target) #home { display: none; }
+
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
 }
+
 #home { min-height: calc(100vh - 60px); }
 .hero {
     background: linear-gradient(135deg, var(--denim) 0%, var(--denim-light) 100%);
@@ -147,28 +165,28 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
     .hero-tags { justify-content: center; }
     .hero-text p { margin-left: auto; margin-right: auto; }
 }
+
 #gallery { padding: 3.5rem 2rem 4rem; max-width: 1000px; margin: 0 auto; }
 .page-title { font-size: 2rem; font-weight: 800; color: var(--denim); margin-bottom: 0.4rem; }
 .page-subtitle { font-size: 1rem; color: var(--muted); margin-bottom: 2.5rem; }
 .album-list { display: flex; flex-direction: column; gap: 1.5rem; }
-.album-item {
+
+details.album-item {
     background: var(--white);
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(41,70,91,0.1);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-.album-item:hover { box-shadow: 0 8px 36px rgba(41,70,91,0.18); transform: translateY(-2px); }
-.album-header {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    padding: 0;
+details.album-item:hover { box-shadow: 0 8px 36px rgba(41,70,91,0.18); transform: translateY(-2px); }
+
+details.album-item summary {
+    list-style: none;
     cursor: pointer;
     user-select: none;
-    position: relative;
-    overflow: hidden;
 }
+details.album-item summary::-webkit-details-marker { display: none; }
+
 .album-banner {
     width: 100%;
     padding: 1.5rem 1.75rem;
@@ -178,9 +196,10 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
     transition: filter 0.2s;
 }
 .album-banner:hover { filter: brightness(1.05); }
-.album-item[data-album="dance"] .album-banner { background: linear-gradient(120deg, #29465B 0%, #4a7fa5 100%); }
-.album-item[data-album="noface"] .album-banner { background: linear-gradient(120deg, #1e3344 0%, #3a5f7a 100%); }
-.album-item[data-album="cat"] .album-banner { background: linear-gradient(120deg, #4a3728 0%, #8b6344 100%); }
+details[data-album="dance"] .album-banner { background: linear-gradient(120deg, #29465B 0%, #4a7fa5 100%); }
+details[data-album="noface"] .album-banner { background: linear-gradient(120deg, #1e3344 0%, #3a5f7a 100%); }
+details[data-album="cat"] .album-banner { background: linear-gradient(120deg, #4a3728 0%, #8b6344 100%); }
+
 .album-emoji {
     font-size: 2.8rem;
     width: 64px;
@@ -191,10 +210,9 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
     background: rgba(255,255,255,0.15);
     border-radius: 14px;
     flex-shrink: 0;
-    backdrop-filter: blur(4px);
 }
 .album-text { flex: 1; }
-.album-text h3 { font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 0.25rem; letter-spacing: 0.01em; }
+.album-text h3 { font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 0.25rem; }
 .album-text p { font-size: 0.85rem; color: rgba(255,255,255,0.72); }
 .album-badges { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
 .album-count {
@@ -205,16 +223,15 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
     padding: 0.3rem 0.75rem;
     border-radius: 20px;
     letter-spacing: 0.04em;
-    backdrop-filter: blur(4px);
 }
 .album-arrow {
     color: rgba(255,255,255,0.8);
     font-size: 1rem;
-    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    transition: transform 0.35s ease;
+    display: inline-block;
 }
-.album-item.open .album-arrow { transform: rotate(180deg); }
-.album-body { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-.album-item.open .album-body { max-height: 1400px; }
+details[open] .album-arrow { transform: rotate(180deg); }
+
 .album-body-inner { padding: 1.5rem; }
 .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
 @media (max-width: 600px) { .photo-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -229,33 +246,26 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
 }
 .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
 .photo-frame:hover img { transform: scale(1.08); }
-.photo-frame .ph-hover {
+.ph-hover {
     position: absolute;
     inset: 0;
     background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
     opacity: 0;
     transition: opacity 0.3s ease;
-    display: flex;
-    align-items: flex-end;
-    padding: 0.65rem 0.75rem;
 }
 .photo-frame:hover .ph-hover { opacity: 1; }
-.photo-frame .ph-hover span { font-size: 0.72rem; color: rgba(255,255,255,0.9); font-weight: 600; letter-spacing: 0.03em; }
-.photo-frame .ph-placeholder {
+.ph-placeholder {
     position: absolute;
     inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
     color: #b0bcc4;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    font-size: 1.8rem;
+    opacity: 0.35;
 }
-.photo-frame .ph-placeholder .ph-icon { font-size: 1.8rem; opacity: 0.35; }
+
 #blog { padding: 3.5rem 2rem; max-width: 860px; margin: 0 auto; }
 .blog-list { display: flex; flex-direction: column; gap: 1.5rem; }
 .blog-card {
@@ -268,7 +278,8 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
     gap: 1rem;
     align-items: start;
     transition: box-shadow 0.2s, transform 0.2s;
-    cursor: default;
+    text-decoration: none;
+    color: inherit;
 }
 .blog-card:hover { box-shadow: 0 6px 28px rgba(41,70,91,0.12); transform: translateY(-2px); }
 .blog-card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
@@ -282,6 +293,7 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
     .blog-card { grid-template-columns: 1fr; }
     .blog-card-num { display: none; }
 }
+
 #contact { min-height: calc(100vh - 60px); display: flex; align-items: center; justify-content: center; padding: 4rem 2rem; }
 .contact-inner { text-align: center; max-width: 500px; width: 100%; }
 .contact-inner h1 { font-size: 2rem; font-weight: 800; color: var(--denim); margin-bottom: 0.5rem; }
@@ -298,7 +310,6 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
     color: var(--black);
     box-shadow: 0 2px 10px rgba(41,70,91,0.08);
     transition: all 0.2s ease;
-    cursor: pointer;
 }
 .contact-link:hover { background: var(--denim); color: var(--white); box-shadow: 0 4px 20px rgba(41,70,91,0.25); transform: translateY(-2px); }
 .contact-link .cl-icon { font-size: 1.3rem; width: 32px; text-align: center; }
@@ -312,15 +323,17 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
 <body>
 
 <header>
-    <nav id="main-nav">
-        <button onclick="navigate('home')" class="active" data-target="home">Home</button>
-        <button onclick="navigate('gallery')" data-target="gallery">Gallery</button>
-        <button onclick="navigate('blog')" data-target="blog">Blog</button>
-        <button onclick="navigate('contact')" data-target="contact">Contact</button>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#blog">Blog</a>
+        <a href="#contact">Contact</a>
     </nav>
 </header>
 
-<section id="home" class="page-section active">
+<main>
+
+<section id="home" class="page-section">
     <div class="hero">
         <div class="hero-inner">
             <div class="hero-text">
@@ -337,7 +350,7 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
             <div class="hero-photo-wrap">
                 <div class="hero-photo">
                     <img src="profil.jpeg" alt="Foto Profil" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                    <div class="ph-text" style="display:none">📷<br>Foto<br>Profil</div>
+                    <div class="ph-text" style="display:none">&#128247;<br>Foto<br>Profil</div>
                 </div>
                 <span class="hero-name-label">Zephaniah D. A.</span>
             </div>
@@ -379,8 +392,9 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
     <p class="page-subtitle">Momen yang terabadikan — gerak, bayangan, dan makhluk berbulu.</p>
 
     <div class="album-list">
-        <div class="album-item" id="album-dance" data-album="dance">
-            <div class="album-header" onclick="toggleAlbum('album-dance')">
+
+        <details class="album-item" data-album="dance">
+            <summary>
                 <div class="album-banner">
                     <div class="album-emoji">🕺</div>
                     <div class="album-text">
@@ -392,23 +406,21 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
                         <span class="album-arrow">&#9660;</span>
                     </div>
                 </div>
-            </div>
-            <div class="album-body">
-                <div class="album-body-inner">
-                    <div class="photo-grid">
-                        <div class="photo-frame"><img src="dance1.jpeg" alt="Dance 1" onerror="this.style.display='none'"></div>
-                        <div class="photo-frame"><img src="dance2.jpeg" alt="Dance 2" onerror="this.style.display='none'"></div>
-                        <div class="photo-frame"><img src="dance3.jpeg" alt="Dance 3" onerror="this.style.display='none'"></div>
-                        <div class="photo-frame"><img src="dance4.jpeg" alt="Dance 4" onerror="this.style.display='none'"></div>
-                        <div class="photo-frame"><img src="dance5.jpeg" alt="Dance 5" onerror="this.style.display='none'"></div>
-                        <div class="photo-frame"><img src="dance6.jpeg" alt="Dance 6" onerror="this.style.display='none'"></div>
-                    </div>
+            </summary>
+            <div class="album-body-inner">
+                <div class="photo-grid">
+                    <div class="photo-frame"><img src="dance1.jpeg" alt="Dance 1" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
+                    <div class="photo-frame"><img src="dance2.jpeg" alt="Dance 2" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
+                    <div class="photo-frame"><img src="dance3.jpeg" alt="Dance 3" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
+                    <div class="photo-frame"><img src="dance4.jpeg" alt="Dance 4" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
+                    <div class="photo-frame"><img src="dance5.jpeg" alt="Dance 5" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
+                    <div class="photo-frame"><img src="dance6.jpeg" alt="Dance 6" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
                 </div>
             </div>
-        </div>
+        </details>
 
-        <div class="album-item" id="album-noface" data-album="noface">
-            <div class="album-header" onclick="toggleAlbum('album-noface')">
+        <details class="album-item" data-album="noface">
+            <summary>
                 <div class="album-banner">
                     <div class="album-emoji">🌑</div>
                     <div class="album-text">
@@ -420,23 +432,21 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
                         <span class="album-arrow">&#9660;</span>
                     </div>
                 </div>
-            </div>
-            <div class="album-body">
-                <div class="album-body-inner">
-                    <div class="photo-grid">
-                        <div class="photo-frame"><img src="noface1.jpeg" alt="No Face 1" onerror="this.style.display='none'"></div>
-                        <div class="photo-frame"><img src="noface2.jpeg" alt="No Face 2" onerror="this.style.display='none'"></div>
-                        <div class="photo-frame"><img src="noface3.jpeg" alt="No Face 3" onerror="this.style.display='none'"></div>
-                        <div class="photo-frame"><img src="noface4.jpeg" alt="No Face 4" onerror="this.style.display='none'"></div>
-                        <div class="photo-frame"><img src="noface5.jpeg" alt="No Face 5" onerror="this.style.display='none'"></div>
-                        <div class="photo-frame"><img src="noface6.jpeg" alt="No Face 6" onerror="this.style.display='none'"></div>
-                    </div>
+            </summary>
+            <div class="album-body-inner">
+                <div class="photo-grid">
+                    <div class="photo-frame"><img src="noface1.jpeg" alt="No Face 1" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
+                    <div class="photo-frame"><img src="noface2.jpeg" alt="No Face 2" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
+                    <div class="photo-frame"><img src="noface3.jpeg" alt="No Face 3" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
+                    <div class="photo-frame"><img src="noface4.jpeg" alt="No Face 4" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
+                    <div class="photo-frame"><img src="noface5.jpeg" alt="No Face 5" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
+                    <div class="photo-frame"><img src="noface6.jpeg" alt="No Face 6" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
                 </div>
             </div>
-        </div>
+        </details>
 
-        <div class="album-item" id="album-cat" data-album="cat">
-            <div class="album-header" onclick="toggleAlbum('album-cat')">
+        <details class="album-item" data-album="cat">
+            <summary>
                 <div class="album-banner">
                     <div class="album-emoji">🐈</div>
                     <div class="album-text">
@@ -448,20 +458,19 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
                         <span class="album-arrow">&#9660;</span>
                     </div>
                 </div>
-            </div>
-            <div class="album-body">
-                <div class="album-body-inner">
-                    <div class="photo-grid">
-                        <div class="photo-frame"><img src="cat1.jpeg" alt="Cat 1" onerror="this.style.display='none'"></div>
-                        <div class="photo-frame"><img src="cat2.jpeg" alt="Cat 2" onerror="this.style.display='none'"></div>
-                        <div class="photo-frame"><img src="cat3.jpeg" alt="Cat 3" onerror="this.style.display='none'"></div>
-                        <div class="photo-frame"><img src="cat4.jpeg" alt="Cat 4" onerror="this.style.display='none'"></div>
-                        <div class="photo-frame"><img src="cat5.jpeg" alt="Cat 5" onerror="this.style.display='none'"></div>
-                        <div class="photo-frame"><img src="cat6.jpeg" alt="Cat 6" onerror="this.style.display='none'"></div>
-                    </div>
+            </summary>
+            <div class="album-body-inner">
+                <div class="photo-grid">
+                    <div class="photo-frame"><img src="cat1.jpeg" alt="Cat 1" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
+                    <div class="photo-frame"><img src="cat2.jpeg" alt="Cat 2" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
+                    <div class="photo-frame"><img src="cat3.jpeg" alt="Cat 3" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
+                    <div class="photo-frame"><img src="cat4.jpeg" alt="Cat 4" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
+                    <div class="photo-frame"><img src="cat5.jpeg" alt="Cat 5" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
+                    <div class="photo-frame"><img src="cat6.jpeg" alt="Cat 6" onerror="this.style.display='none'"><div class="ph-hover"></div><div class="ph-placeholder">&#128247;</div></div>
                 </div>
             </div>
-        </div>
+        </details>
+
     </div>
 </section>
 
@@ -470,7 +479,7 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
     <p class="page-subtitle">Repository publik dari akun GitHub — diambil langsung dari <a href="https://github.com/ephanpdk" target="_blank" style="color:var(--denim);text-decoration:none;font-weight:600;">github.com/ephanpdk</a>.</p>
 
     <div class="blog-list">
-        <a class="blog-card" href="https://github.com/ephanpdk/trupest" target="_blank" style="text-decoration:none;color:inherit;">
+        <a class="blog-card" href="https://github.com/ephanpdk/trupest" target="_blank">
             <div class="blog-card-body">
                 <div class="blog-card-tags"><span class="blog-tag">TypeScript</span><span class="blog-tag">Game Dev</span><span class="blog-tag">Web</span></div>
                 <h3>trupest</h3>
@@ -480,7 +489,7 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
             <div class="blog-card-num">01</div>
         </a>
 
-        <a class="blog-card" href="https://github.com/ephanpdk/sistem-informasi-akademik" target="_blank" style="text-decoration:none;color:inherit;">
+        <a class="blog-card" href="https://github.com/ephanpdk/sistem-informasi-akademik" target="_blank">
             <div class="blog-card-body">
                 <div class="blog-card-tags"><span class="blog-tag">HTML</span><span class="blog-tag">Web</span></div>
                 <h3>sistem-informasi-akademik</h3>
@@ -490,7 +499,7 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
             <div class="blog-card-num">02</div>
         </a>
 
-        <a class="blog-card" href="https://github.com/ephanpdk/ecommerce-recommendation-system" target="_blank" style="text-decoration:none;color:inherit;">
+        <a class="blog-card" href="https://github.com/ephanpdk/ecommerce-recommendation-system" target="_blank">
             <div class="blog-card-body">
                 <div class="blog-card-tags"><span class="blog-tag">Jupyter Notebook</span><span class="blog-tag">Machine Learning</span></div>
                 <h3>ecommerce-recommendation-system</h3>
@@ -500,7 +509,7 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
             <div class="blog-card-num">03</div>
         </a>
 
-        <a class="blog-card" href="https://github.com/ephanpdk/gameprogrammer" target="_blank" style="text-decoration:none;color:inherit;">
+        <a class="blog-card" href="https://github.com/ephanpdk/gameprogrammer" target="_blank">
             <div class="blog-card-body">
                 <div class="blog-card-tags"><span class="blog-tag">Game Dev</span></div>
                 <h3>gameprogrammer</h3>
@@ -546,20 +555,7 @@ nav button.active { color: var(--white); background: rgba(255,255,255,0.18); }
     </div>
 </section>
 
-<script>
-function toggleAlbum(id) {
-    document.getElementById(id).classList.toggle('open');
-}
-function navigate(targetId) {
-    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('#main-nav button').forEach(b => b.classList.remove('active'));
-    const section = document.getElementById(targetId);
-    if (section) section.classList.add('active');
-    const btn = document.querySelector('#main-nav button[data-target="' + targetId + '"]');
-    if (btn) btn.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-</script>
+</main>
 
 </body>
 </html>
