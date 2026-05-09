@@ -134,23 +134,52 @@
         },
         {
             id: 4,
-            title: 'Belajar TypeScript: Dari Frustasi ke Produktivitas dalam 30 Hari',
-            date: '5 Apr 2026',
-            readTime: '7 menit baca',
-            tags: ['Teknologi', 'TypeScript', 'Web Dev'],
-            excerpt: 'TypeScript terasa menyebalkan di minggu pertama — semua code saya merah penuh error. Tapi di hari ke-30, saya tidak bisa membayangkan kembali ke JavaScript biasa.',
+            title: 'Trupest: Membangun Web Card Game dari Nol dengan TypeScript',
+            date: '27 Des 2025',
+            readTime: '6 menit baca',
+            tags: ['Project', 'TypeScript', 'Game Dev', 'Web'],
+            excerpt: 'Bagaimana saya merancang dan membangun game kartu berbasis browser yang menggabungkan mekanik Whist, Spades, dan Hearts menjadi pengalaman trick-taking yang unik dan cross-platform.',
             body: `
-                <p>Ketika pertama belajar TypeScript, reaksi pertama saya adalah: "Ini JavaScript tapi lebih susah. Untuk apa?" Error di mana-mana, type annotation yang harus ditulis manual, interface yang terasa bertele-tele. Saya hampir menyerah di hari kelima.</p>
-                <h3>Mengapa TypeScript Terasa Sulit di Awal</h3>
-                <p>Masalahnya bukan TypeScript yang buruk — masalahnya adalah saya sudah terbiasa dengan kebebasan JavaScript. TypeScript memaksa kita berpikir lebih struktural: data apa yang mengalir di mana, function apa yang menerima dan mengembalikan apa. Ini butuh perubahan mindset, bukan hanya sintaks baru.</p>
-                <h3>Titik Balik di Minggu Kedua</h3>
+                <p>Trupest (singkatan dari <em>Troupe</em>) adalah proyek game kartu lokal berbasis browser yang saya bangun dari nol. Ide awalnya sederhana: saya ingin game kartu yang bisa dimainkan bersama teman tanpa perlu install apapun, cukup buka browser. Tapi perjalanannya jauh lebih kompleks dari yang saya bayangkan.</p>
+                <h3>Konsep: Menggabungkan Tiga Game Sekaligus</h3>
+                <p>Trupest menggabungkan mekanik dari tiga game kartu klasik — Whist, Spades, dan Hearts. Ketiganya adalah game <em>trick-taking</em>, artinya pemain berlomba memenangkan "trik" dengan kartu tertinggi atau kartu truf. Tantangannya adalah merancang ruleset yang terasa kohesif, bukan sekadar tumpukan aturan dari tiga game berbeda.</p>
+                <h3>Stack Teknis</h3>
                 <ul>
-                    <li>Saya mulai melihat error sebagai <em>teman</em>, bukan musuh. TypeScript menangkap bug sebelum kode dijalankan.</li>
-                    <li>IntelliSense di editor jadi jauh lebih powerful — autocomplete yang benar-benar akurat.</li>
-                    <li>Refactoring besar jadi tidak menakutkan lagi karena compiler langsung tunjukkan mana yang harus diubah.</li>
+                    <li><strong>TypeScript:</strong> Dipilih karena logika game melibatkan banyak state kompleks — deck, tangan pemain, skor, urutan giliran — yang jauh lebih aman dikelola dengan type system.</li>
+                    <li><strong>Browser-native:</strong> Tidak ada backend, tidak ada database. Semua state game berjalan di client, membuatnya bisa dimainkan secara lokal tanpa koneksi internet.</li>
+                    <li><strong>Cross-platform:</strong> Berjalan di desktop maupun mobile hanya dengan membuka URL di browser.</li>
                 </ul>
-                <h3>Hari ke-30: Tidak Mau Balik</h3>
-                <p>Di proyek trupest (web game saya), TypeScript sangat membantu mengelola kompleksitas logika permainan kartu. State management yang rumit jadi lebih terkontrol karena setiap type didefinisikan dengan jelas. Kalau kamu ragu mencoba TypeScript, mulailah hari ini. Investasi awal yang terasa berat itu akan terbayar berlipat.</p>
+                <h3>Tantangan Terbesar</h3>
+                <p>Bagian paling sulit bukan coding-nya, tapi desain game-nya. Setiap perubahan kecil pada aturan bisa mengubah keseimbangan seluruh permainan. Saya melakukan puluhan iterasi dan playtesting sebelum menemukan ruleset yang terasa fun dan fair. Proyek ini mengajarkan saya bahwa game design adalah seni tersendiri yang tidak kalah kompleks dari engineering-nya.</p>
+                <p>Repository: <a href="https://github.com/ephanpdk/trupest" target="_blank" rel="noopener noreferrer" style="color:var(--denim);font-weight:600;">github.com/ephanpdk/trupest</a></p>
+            `
+        },
+        {
+            id: 5,
+            title: 'E-Commerce Recommendation System: Belajar Machine Learning Lewat Proyek Nyata',
+            date: '8 Des 2025',
+            readTime: '7 menit baca',
+            tags: ['Project', 'Machine Learning', 'Python', 'E-Commerce'],
+            excerpt: 'Menjelajahi dunia rekomendasi produk dengan pendekatan machine learning — dari eksplorasi data mentah hingga membangun model yang memberikan saran relevan kepada pengguna belanja online.',
+            body: `
+                <p>Proyek ini lahir dari keingintahuan saya tentang bagaimana platform e-commerce besar seperti Tokopedia atau Shopee bisa "tahu" produk apa yang ingin kamu beli, bahkan sebelum kamu menyadarinya sendiri. Jawabannya: sistem rekomendasi berbasis machine learning.</p>
+                <h3>Apa Itu Recommendation System?</h3>
+                <p>Recommendation system adalah algoritma yang menganalisis pola perilaku pengguna — produk apa yang dilihat, dibeli, atau diberi rating — lalu memprediksi produk lain yang kemungkinan besar akan disukai pengguna tersebut. Ada dua pendekatan utama yang saya eksplorasi:</p>
+                <ul>
+                    <li><strong>Collaborative Filtering:</strong> Menemukan pengguna dengan pola yang mirip, lalu merekomendasikan apa yang disukai mereka. "Orang yang membeli ini juga membeli..."</li>
+                    <li><strong>Content-Based Filtering:</strong> Menganalisis atribut produk itu sendiri (kategori, deskripsi, harga) untuk menemukan produk serupa.</li>
+                </ul>
+                <h3>Proses Pengerjaan</h3>
+                <p>Proyek ini dibangun menggunakan Jupyter Notebook dan Python. Alur kerjanya meliputi:</p>
+                <ul>
+                    <li>Eksplorasi dan pembersihan data (EDA) untuk memahami distribusi dan kualitas dataset.</li>
+                    <li>Feature engineering untuk mengekstrak sinyal yang berguna dari data mentah.</li>
+                    <li>Implementasi model dan evaluasi menggunakan metrik seperti precision dan recall.</li>
+                    <li>Visualisasi hasil rekomendasi untuk memvalidasi kualitas output model.</li>
+                </ul>
+                <h3>Pelajaran yang Diambil</h3>
+                <p>Machine learning bukan sulap. Kualitas data jauh lebih menentukan hasil akhir daripada kecanggihan algoritmanya. Proyek ini mengajarkan saya untuk tidak langsung loncat ke model, tapi menghabiskan waktu yang cukup untuk benar-benar memahami data terlebih dahulu.</p>
+                <p>Repository: <a href="https://github.com/ephanpdk/ecommerce-recommendation-system" target="_blank" rel="noopener noreferrer" style="color:var(--denim);font-weight:600;">github.com/ephanpdk/ecommerce-recommendation-system</a></p>
             `
         }
     ];
