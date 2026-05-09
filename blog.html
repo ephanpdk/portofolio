@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Zephaniah Daniel Anis</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<main>
+    <div class="blog-wrapper">
+        <h1 class="page-title">Blog</h1>
+        <p class="page-subtitle">Tulisan tentang teknologi, seni, dan pelajaran dari pengalaman pribadi. Klik artikel untuk membaca selengkapnya.</p>
+
+        <div class="blog-list">
+
+            <button class="blog-card" data-id="1">
+                <div class="blog-card-body">
+                    <div class="blog-card-tags">
+                        <span class="blog-tag">Teknologi</span>
+                        <span class="blog-tag">Gaming</span>
+                        <span class="blog-tag">Programming</span>
+                    </div>
+                    <h3>Mengapa Game High-APM Membuatku Menjadi Programmer yang Lebih Baik</h3>
+                    <p>Ternyata kebiasaan bermain game strategi real-time secara intensif punya dampak nyata terhadap cara saya menulis kode dan menyelesaikan masalah pemrograman.</p>
+                    <div class="blog-card-meta">
+                        <span>&#128197; 15 Jan 2026</span>
+                        <span>&#128337; 5 menit baca</span>
+                    </div>
+                </div>
+                <div class="blog-card-num">01</div>
+            </button>
+
+            <button class="blog-card" data-id="2">
+                <div class="blog-card-body">
+                    <div class="blog-card-tags">
+                        <span class="blog-tag">Seni</span>
+                        <span class="blog-tag">Dance</span>
+                        <span class="blog-tag">K-Pop</span>
+                    </div>
+                    <h3>K-Pop Dance: Disiplin, Ekspresi, dan Pelajaran Hidup di Balik Gerakan</h3>
+                    <p>Menari K-Pop bukan sekadar meniru gerakan idola. Ada filosofi mendalam soal konsistensi, keberanian, dan ekspresi diri yang saya pelajari dari lantai latihan.</p>
+                    <div class="blog-card-meta">
+                        <span>&#128197; 28 Feb 2026</span>
+                        <span>&#128337; 4 menit baca</span>
+                    </div>
+                </div>
+                <div class="blog-card-num">02</div>
+            </button>
+
+            <button class="blog-card" data-id="3">
+                <div class="blog-card-body">
+                    <div class="blog-card-tags">
+                        <span class="blog-tag">Seni</span>
+                        <span class="blog-tag">Fotografi</span>
+                        <span class="blog-tag">Kreativitas</span>
+                    </div>
+                    <h3>Fotografi: Seni Melihat yang Mengubah Cara Saya Memandang Dunia</h3>
+                    <p>Kamera bukan hanya alat dokumentasi. Ia mengubah cara mata melihat, memaksa kita melambat dan memperhatikan detail yang biasanya terlewat begitu saja.</p>
+                    <div class="blog-card-meta">
+                        <span>&#128197; 10 Mar 2026</span>
+                        <span>&#128337; 6 menit baca</span>
+                    </div>
+                </div>
+                <div class="blog-card-num">03</div>
+            </button>
+
+            <button class="blog-card" data-id="4">
+                <div class="blog-card-body">
+                    <div class="blog-card-tags">
+                        <span class="blog-tag">Teknologi</span>
+                        <span class="blog-tag">TypeScript</span>
+                        <span class="blog-tag">Web Dev</span>
+                    </div>
+                    <h3>Belajar TypeScript: Dari Frustasi ke Produktivitas dalam 30 Hari</h3>
+                    <p>TypeScript terasa menyebalkan di minggu pertama — semua code saya merah penuh error. Tapi di hari ke-30, saya tidak bisa membayangkan kembali ke JavaScript biasa.</p>
+                    <div class="blog-card-meta">
+                        <span>&#128197; 5 Apr 2026</span>
+                        <span>&#128337; 7 menit baca</span>
+                    </div>
+                </div>
+                <div class="blog-card-num">04</div>
+            </button>
+
+        </div>
+    </div>
+</main>
+
+<!-- Blog Modal -->
+<div id="blog-modal">
+    <div class="blog-modal-inner">
+        <button id="blog-modal-close" aria-label="Tutup">&times;</button>
+        <div class="blog-modal-tags" id="blog-modal-tags"></div>
+        <h2 id="blog-modal-title"></h2>
+        <div class="blog-modal-meta" id="blog-modal-meta"></div>
+        <div class="blog-modal-body" id="blog-modal-body"></div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Zephaniah Daniel Anis. Dibuat dengan HTML, CSS &amp; JavaScript.</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
