@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,12 +14,12 @@
         <a href="gallery.html">Gallery</a>
         <a href="blog.html">Blog</a>
         <a href="contact.html">Contact</a>
+        <button id="dark-toggle" aria-label="Aktifkan mode gelap" title="Toggle Dark Mode">🌙</button>
     </nav>
 </header>
 
 <main>
     <div class="contact-wrapper">
-        <div class="contact-inner">
             <h1>Let's Connect</h1>
             <p class="sub">Terbuka untuk diskusi teknis, kolaborasi, atau sekadar ngobrol.</p>
 
@@ -68,16 +68,38 @@
                     </div>
                     <span class="cl-arrow">&#8599;</span>
                 </a>
-                <a class="contact-link" href="https://wa.me/6289563286796" target="_blank" rel="noopener noreferrer">
+                <a class="contact-link" href="https://wa.me/62895632866796" target="_blank" rel="noopener noreferrer">
                     <span class="cl-icon">&#128222;</span>
                     <div class="cl-info">
                         <span class="cl-label">WhatsApp</span>
-                        <span class="cl-value">+62 895-6328-6796</span>
+                        <span class="cl-value">+62 895-6328-66796</span>
                     </div>
                     <span class="cl-arrow">&#8599;</span>
                 </a>
             </div>
-        </div>
+
+            <div class="contact-form-section">
+                <h2>&#9993; Kirim Pesan</h2>
+                <form id="contact-form" class="contact-form" novalidate>
+                    <input type="hidden" name="access_key" value="GANTI_DENGAN_API_KEY_WEB3FORMS_ANDA">
+                    <input type="hidden" name="subject" value="Pesan baru dari portofolio">
+                    <input type="checkbox" name="botcheck" style="display:none">
+                    <div class="form-group">
+                        <label for="form-name">Nama</label>
+                        <input type="text" id="form-name" name="name" placeholder="Nama lengkap kamu" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-email">Email</label>
+                        <input type="email" id="form-email" name="email" placeholder="email@contoh.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-textarea">Pesan</label>
+                        <textarea id="form-textarea" name="message" placeholder="Tulis pesanmu di sini..." required></textarea>
+                    </div>
+                    <div id="form-message" class="form-message" role="alert" aria-live="polite"></div>
+                    <button type="submit" class="form-submit">Kirim Pesan</button>
+                </form>
+            </div>
     </div>
 </main>
 
