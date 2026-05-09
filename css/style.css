@@ -418,12 +418,17 @@ details[open] .album-arrow { transform: rotate(180deg); }
 
 /* ── CONTACT ── */
 .contact-wrapper {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 4rem 2rem;
-    max-width: 580px;
-    margin: 0 auto;
+    text-align: center;
 }
-.contact-wrapper h1 { font-size: 2rem; font-weight: 800; color: var(--denim); margin-bottom: 0.4rem; }
-.contact-wrapper .sub { font-size: 0.95rem; color: var(--muted); margin-bottom: 1.75rem; }
+.contact-wrapper h1 { font-size: 2rem; font-weight: 800; color: var(--denim); margin-bottom: 0.5rem; }
+.contact-wrapper .sub { font-size: 0.95rem; color: var(--muted); margin-bottom: 2rem; }
+.contact-wrapper > * { width: 100%; max-width: 500px; }
 
 .profile-card {
     background: var(--white);
